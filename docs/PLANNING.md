@@ -239,7 +239,11 @@ export async function initCommand(config: Config): Promise<void> {
         name: 'vaultPath',
         message: 'Please enter the absolute path to your journal vault:',
         default: config.vaultPath, // Default suggestion - user can choose any location
-        validate: (input) => input ? true : 'Path cannot be empty.',
+        validate: (input) => {
+          if (!input) return 'Path cannot be empty.';
+          if (!path.isAbsolute(input)) return 'Please provide an absolute path.';
+          return true;
+        },
       },
       {
         type: 'input',
@@ -251,6 +255,16 @@ export async function initCommand(config: Config): Promise<void> {
     ]);
 
     const newConfig = { ...config, vaultPath: answers.vaultPath, vaultName: answers.vaultName };
+    
+    // Check if vault directory exists, create if it doesn't
+    if (!await fs.pathExists(newConfig.vaultPath)) {
+      console.log(chalk.blue(`\nVault directory doesn't exist. Creating: ${newConfig.vaultPath}`));
+      await fs.ensureDir(newConfig.vaultPath);
+      console.log(chalk.green(`✓ Created vault directory`));
+    } else {
+      console.log(chalk.blue(`\nUsing existing vault directory: ${newConfig.vaultPath}`));
+    }
+    
     saveConfig(newConfig); // Save the user-provided path
 
     console.log(chalk.blue('\nCreating journal structure...'));
@@ -287,7 +301,7 @@ export async function initCommand(config: Config): Promise<void> {
 }
 ```
 
-**Expected outcome**: Running `rkv init` prompts for a vault path and name, saves the configuration, creates folders, and copies the default templates into the vault. Works with any storage location (local, Dropbox, Google Drive, iCloud, etc.).
+**Expected outcome**: Running `rkv init` prompts for a vault path and name, automatically creates the vault directory if it doesn't exist, saves the configuration, creates the journal folder structure, and copies the default templates into the vault. Works with any storage location (local, Dropbox, Google Drive, iCloud, etc.).
 
 #### Step 2.4: Implement New Command
 Create `src/commands/new.ts`:
