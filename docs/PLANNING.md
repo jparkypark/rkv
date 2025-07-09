@@ -2,13 +2,13 @@
 
 ### Project Setup & Structure
 
-**Goal**: Create a working CLI tool that integrates with Obsidian and Google Drive
+**Goal**: Create a working CLI tool that integrates with Obsidian and any storage location
 
 **Tech Stack**:
 - Node.js with TypeScript for better code clarity
 - Commander.js for CLI framework
 - Obsidian (already installed) as editor
-- Google Drive for sync (folder already exists)
+- Storage-agnostic (works with any folder location - local, cloud sync, etc.)
 
 ---
 
@@ -50,7 +50,7 @@ export interface Config {
 }
 
 export const DEFAULT_CONFIG: Config = {
-  vaultPath: path.join(os.homedir(), 'Google Drive', 'RKV-Journal'),
+  vaultPath: path.join(os.homedir(), 'RKV-Journal'),
   vaultName: 'RKV-Journal',
   editor: 'obsidian',
   defaultExtension: '.md'
@@ -238,12 +238,19 @@ export async function initCommand(config: Config): Promise<void> {
         type: 'input',
         name: 'vaultPath',
         message: 'Please enter the absolute path to your journal vault:',
-        default: config.vaultPath, // Suggest the default, but let user change it
+        default: config.vaultPath, // Default suggestion - user can choose any location
         validate: (input) => input ? true : 'Path cannot be empty.',
+      },
+      {
+        type: 'input',
+        name: 'vaultName',
+        message: 'Please enter your vault name (for Obsidian integration):',
+        default: path.basename(answers.vaultPath || config.vaultPath),
+        validate: (input) => input ? true : 'Vault name cannot be empty.',
       },
     ]);
 
-    const newConfig = { ...config, vaultPath: answers.vaultPath };
+    const newConfig = { ...config, vaultPath: answers.vaultPath, vaultName: answers.vaultName };
     saveConfig(newConfig); // Save the user-provided path
 
     console.log(chalk.blue('\nCreating journal structure...'));
@@ -280,7 +287,7 @@ export async function initCommand(config: Config): Promise<void> {
 }
 ```
 
-**Expected outcome**: Running `rkv init` prompts for a vault path, saves it, creates folders, and copies the default templates into the vault.
+**Expected outcome**: Running `rkv init` prompts for a vault path and name, saves the configuration, creates folders, and copies the default templates into the vault. Works with any storage location (local, Dropbox, Google Drive, iCloud, etc.).
 
 #### Step 2.4: Implement New Command
 Create `src/commands/new.ts`:

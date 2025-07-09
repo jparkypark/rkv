@@ -1,7 +1,7 @@
 {
   "name": "rkv",
   "version": "0.1.0",
-  "description": "A command-line tool for structured professional development journaling that integrates with Obsidian and Google Drive.",
+  "description": "A command-line tool for structured professional development journaling that integrates with Obsidian and any storage location.",
   "main": "index.js",
   "directories": {
     "doc": "docs"

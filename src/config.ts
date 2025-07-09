@@ -10,7 +10,7 @@ export interface Config {
 }
 
 export const DEFAULT_CONFIG: Config = {
-  vaultPath: path.join(os.homedir(), 'Google Drive', 'RKV-Journal'),
+  vaultPath: path.join(os.homedir(), 'RKV-Journal'),
   vaultName: 'RKV-Journal',
   editor: 'obsidian',
   defaultExtension: '.md'

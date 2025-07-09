@@ -1,6 +1,6 @@
 # RKV - Professional Development Journaling
 
-A command-line tool for structured professional development journaling that integrates with Obsidian and Google Drive.
+A command-line tool for structured professional development journaling that integrates with Obsidian and any storage location.
 
 ## Overview
 
@@ -12,7 +12,7 @@ RKV is a CLI tool designed to help professionals maintain consistent development
 - **Quick Capture**: Rapid logging to inbox for later processing
 - **Smart Entry Management**: Intelligent opening of entries based on time and context
 - **Obsidian Integration**: Seamless opening of entries in Obsidian
-- **Google Drive Sync**: Automatic syncing through Google Drive folder structure
+- **Storage Agnostic**: Works with any storage location (local, cloud sync, etc.)
 - **Template System**: User-editable templates with cross-platform distribution
 - **Cross-Platform Support**: Works on Windows, macOS, and Linux
 
@@ -55,7 +55,7 @@ rkv open yesterday
 ## Commands
 
 ### `rkv init`
-Initialize the journal structure in your Google Drive folder, creating:
+Initialize the journal structure in your chosen vault location, creating:
 - `daily/YYYY/MM/` - Daily morning/evening entries
 - `weekly/YYYY/` - Weekly start/end entries  
 - `monthly/YYYY/` - Monthly start/end entries
@@ -123,7 +123,7 @@ RKV uses a configuration file at `~/.rkv/config.json`:
 
 ```json
 {
-  "vaultPath": "/Users/you/Google Drive/RKV-Journal",
+  "vaultPath": "/Users/you/RKV-Journal",
   "vaultName": "RKV-Journal",
   "editor": "obsidian",
   "defaultExtension": ".md"
@@ -133,7 +133,7 @@ RKV uses a configuration file at `~/.rkv/config.json`:
 **Configuration Features:**
 - Automatic fallback to default settings if config is missing or corrupt
 - Interactive setup during `rkv init` with path validation
-- Cross-platform default paths (handles different Google Drive locations)
+- Cross-platform default paths (works with any storage location)
 
 ## Development
 
@@ -198,7 +198,7 @@ Entries are organized by type and date:
 - Node.js 16+
 - TypeScript
 - Obsidian (for editing)
-- Google Drive (for sync)
+- Storage location of choice (local, Dropbox, Google Drive, iCloud, etc.)
 
 ## Future Enhancements
 
