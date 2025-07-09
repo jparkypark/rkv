@@ -1,0 +1,41 @@
+{
+  "name": "rkv",
+  "version": "0.1.0",
+  "description": "A command-line tool for structured professional development journaling that integrates with Obsidian and Google Drive.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "dev": "ts-node src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jparkypark/rkv.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/jparkypark/rkv/issues"
+  },
+  "homepage": "https://github.com/jparkypark/rkv#readme",
+  "dependencies": {
+    "chalk": "^5.4.1",
+    "commander": "^14.0.0",
+    "fs-extra": "^11.3.0",
+    "inquirer": "^12.7.0",
+    "luxon": "^3.7.1"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "@types/inquirer": "^9.0.8",
+    "@types/luxon": "^3.6.2",
+    "@types/node": "^24.0.12",
+    "copyfiles": "^2.4.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  }
+}
