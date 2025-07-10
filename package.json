@@ -1,7 +1,7 @@
 {
   "name": "rkv",
-  "version": "0.1.0",
-  "description": "A command-line tool for structured professional development journaling that integrates with Obsidian and any storage location.",
+  "version": "1.0.0",
+  "description": "A command-line tool for structured professional development journaling.",
   "main": "dist/index.js",
   "bin": {
     "rkv": "dist/index.js"
@@ -18,7 +18,7 @@
     "build:watch": "tsc --watch",
     "dev": "ts-node src/index.ts",
     "dev:watch": "ts-node --watch src/index.ts",
-    "link": "npm run build && npm link",
+    "dev-install": "npm install && npm run build && npm link",
     "unlink": "npm unlink -g rkv",
     "clean": "rm -rf dist",
     "test": "ts-node src/index.ts",

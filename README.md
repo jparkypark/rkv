@@ -23,14 +23,9 @@ RKV is a CLI tool designed to help professionals maintain consistent development
 git clone https://github.com/jparkypark/rkv.git
 cd rkv
 
-# Install dependencies
-npm install
+# Install
+npm run dev-install
 
-# Build the project (compiles TypeScript and copies templates)
-npm run build
-
-# Link for global use
-npm link
 ```
 
 ## Quick Start
@@ -169,16 +164,16 @@ src/
 
 ### Development Scripts
 ```bash
-npm run dev           # Run with ts-node for development
-npm run dev:watch     # Run with ts-node in watch mode
-npm run build         # Compile TypeScript and copy templates
+npm run dev            # Run with ts-node for development
+npm run dev:watch      # Run with ts-node in watch mode
+npm run build          # Compile TypeScript and copy templates
 npm run copy-templates # Copy template files to dist/
-npm run build:watch   # Watch mode compilation
-npm run link          # Build and link globally for testing
-npm run unlink        # Remove global link
-npm run clean         # Remove dist directory
-npm run test          # Test CLI functionality with ts-node
-npm run test:build    # Build and test the distributable version
+npm run build:watch    # Watch mode compilation
+npm run dev-install    # Install dependencies, build, and link globally
+npm run unlink         # Remove global link
+npm run clean          # Remove dist directory
+npm run test           # Test CLI functionality with ts-node
+npm run test:build     # Build and test the distributable version
 ```
 
 ## File Organization
