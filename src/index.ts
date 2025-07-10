@@ -3,6 +3,7 @@ import { Command } from 'commander';
 import { Config, loadConfig } from './config';
 import { initCommand } from './commands/init';
 import { newCommand } from './commands/new';
+import { logCommand } from './commands/log';
 
 const config = loadConfig();
 
@@ -41,13 +42,16 @@ program
     }
   });
 
-// Phase 3 commands - to be implemented
 program
   .command('log <message...>')
   .description('Quick capture to inbox')
-  .action((messageParts) => {
-    console.log('Log command - coming in Phase 3');
-    console.log('Use: rkv log "your message here"');
+  .action(async (messageParts) => {
+    try {
+      await logCommand(config, messageParts);
+    } catch (error: any) {
+      console.error('Failed to log capture:', error.message);
+      process.exit(1);
+    }
   });
 
 program
