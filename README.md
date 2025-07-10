@@ -20,13 +20,13 @@ RKV is a CLI tool designed to help professionals maintain consistent development
 
 ```bash
 # Clone the repository
-git clone <repository-url>
+git clone https://github.com/jparkypark/rkv.git
 cd rkv
 
-# Install dependencies (includes cross-platform build tools)
+# Install dependencies
 npm install
 
-# Build the project (includes template distribution)
+# Build the project (compiles TypeScript and copies templates)
 npm run build
 
 # Link for global use
@@ -68,8 +68,12 @@ Create a new journal entry with template:
 - `rkv new morning` - Creates morning entry
 - `rkv new evening` - Creates evening entry
 - `rkv new weekly-start` - Creates weekly planning entry
+- `rkv new weekly-end` - Creates weekly review entry
+- `rkv new monthly-start` - Creates monthly planning entry
+- `rkv new monthly-end` - Creates monthly review entry
 - `rkv new --tomorrow` - Creates tomorrow's entry
 - `rkv new --yesterday` - Creates yesterday's entry
+- `rkv new --date YYYY-MM-DD` - Creates entry for specific date
 
 ### `rkv log <message>`
 Quick capture to daily inbox file:
@@ -80,11 +84,11 @@ rkv log "Potential optimization in user service"
 
 ### `rkv open [date|keyword]`
 Open journal entries intelligently:
-- `rkv open` or `rkv open today` - Opens today's appropriate entry
+- `rkv open` or `rkv open today` - Opens today's most recent entry (evening first, then morning)
 - `rkv open yesterday` - Opens yesterday's most recent entry
 - `rkv open week` - Opens this week's planning entry
-- `rkv open captures` - Opens today's capture file
-- `rkv open 2024-01-15` - Opens specific date entry
+- `rkv open captures` or `rkv open inbox` - Opens today's capture file
+- `rkv open 2024-01-15` - Opens specific date entry (evening first, then morning)
 
 ## Entry Types & Templates
 
@@ -96,21 +100,25 @@ RKV uses a user-editable template system:
 - Users can modify templates to customize entry formats
 
 ### Daily Morning
-- Leadership focus checklist
-- Priority work identification
+- Leadership focus checklist (blocked teammates, follow-up decisions, documentation areas)
+- Priority work identification with impact assessment
 - Team support planning
 
 ### Daily Evening
-- Completed work documentation
-- Leadership actions and outcomes
-- Shadow ownership progress
+- Completed work documentation (specific PRs, features, fixes)
+- Leadership actions mapped to results (unblocked, decided, clarified, mentored)
+- Shadow ownership progress tracking
 - Friction point identification
 - Tomorrow's opportunities
 
-### Weekly Entries
-- Weekly planning and review
-- Team and project progress
-- Strategic focus areas
+### Weekly Planning
+- Leadership experiments (shadow ownership, mentoring, documentation, health checks)
+- Key deliverables (technical, leadership, cross-functional)
+- Success metrics definition
+
+### Monthly Entries
+- Higher-level planning and review cycles
+- Strategic focus areas and long-term progress
 
 ### Quick Captures
 - Timestamped entries in daily capture files
@@ -124,11 +132,16 @@ RKV uses a configuration file at `~/.rkv/config.json`:
 ```json
 {
   "vaultPath": "/Users/you/RKV-Journal",
-  "vaultName": "RKV-Journal",
+  "vaultName": "RKV-Journal", 
   "editor": "obsidian",
   "defaultExtension": ".md"
 }
 ```
+
+**Editor Options:**
+- `obsidian` - Opens entries in Obsidian (recommended)
+- `code` - Opens entries in Visual Studio Code
+- `vim` - Opens entries in Vim/Neovim
 
 **Configuration Features:**
 - Automatic fallback to default settings if config is missing or corrupt
@@ -156,33 +169,17 @@ src/
 
 ### Development Scripts
 ```bash
-npm run dev           # Run with ts-node
+npm run dev           # Run with ts-node for development
+npm run dev:watch     # Run with ts-node in watch mode
 npm run build         # Compile TypeScript and copy templates
 npm run copy-templates # Copy template files to dist/
 npm run build:watch   # Watch mode compilation
-npm run link          # Build and link globally
+npm run link          # Build and link globally for testing
+npm run unlink        # Remove global link
 npm run clean         # Remove dist directory
-npm run test          # Test CLI functionality
+npm run test          # Test CLI functionality with ts-node
 npm run test:build    # Build and test the distributable version
 ```
-
-### Implementation Phases
-
-The project follows a 4-phase implementation plan:
-
-1. **Phase 1**: Project foundation and structure
-2. **Phase 2**: Core commands & utilities (init, new)
-3. **Phase 3**: Quick capture system (log, open)
-4. **Phase 4**: Build and distribution
-
-### Cross-Platform Compatibility
-
-RKV is designed to work seamlessly across operating systems:
-
-- **Path Handling**: Uses Node.js `path.join()` for cross-platform file paths
-- **Template Distribution**: Templates are automatically copied during build process
-- **Obsidian Integration**: Supports URI handlers on Windows, macOS, and Linux
-- **Build Process**: Cross-platform build scripts using `copyfiles`
 
 ## File Organization
 
@@ -190,14 +187,17 @@ Entries are organized by type and date:
 - `daily/2024/01/2024-01-15-morning.md`
 - `daily/2024/01/2024-01-15-evening.md`
 - `weekly/2024/2024-W03-start.md`
+- `weekly/2024/2024-W03-end.md`
 - `monthly/2024/2024-01-start.md`
+- `monthly/2024/2024-01-end.md`
+- `quarterly/2024/2024-Q1.md`
 - `inbox/2024-01-15-captures.md`
 
 ## Requirements
 
 - Node.js 16+
-- TypeScript
-- Obsidian (for editing)
+- TypeScript (for development)
+- Obsidian (recommended for editing, but supports other editors)
 - Storage location of choice (local, Dropbox, Google Drive, iCloud, etc.)
 
 ## Future Enhancements
