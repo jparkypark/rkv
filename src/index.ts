@@ -4,6 +4,7 @@ import { Config, loadConfig } from './config';
 import { initCommand } from './commands/init';
 import { newCommand } from './commands/new';
 import { logCommand } from './commands/log';
+import { openCommand } from './commands/open';
 
 const config = loadConfig();
 
@@ -57,9 +58,13 @@ program
 program
   .command('open [date]')
   .description('Open journal entry')
-  .action((date) => {
-    console.log('Open command - coming in Phase 3');
-    console.log('Use: rkv open [today|yesterday|week|captures|YYYY-MM-DD]');
+  .action(async (date) => {
+    try {
+      await openCommand(config, date);
+    } catch (error: any) {
+      console.error('Failed to open entry:', error.message);
+      process.exit(1);
+    }
   });
 
 program.parse();
