@@ -1,6 +1,6 @@
 # RKV - Professional Development Journaling
 
-A command-line tool for structured professional development journaling that integrates with Obsidian and any storage location.
+A command-line tool for structured professional development journaling.
 
 ## Overview
 
